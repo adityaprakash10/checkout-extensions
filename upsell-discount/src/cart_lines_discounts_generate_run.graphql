@@ -1,0 +1,19 @@
+query CartInput {
+  cart {
+    attribute(key: "upsell_discount_percent") {
+      value
+    }
+    lines {
+      id
+      upsellAttribute: attribute(key: "upsell") {
+        value
+      }
+      bundleAttribute: attribute(key: "is_bundle") {
+        value
+      }
+    }
+  }
+  discount {
+    discountClasses
+  }
+}

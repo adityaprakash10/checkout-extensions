@@ -1,0 +1,17 @@
+query CartTransformRunInput {
+  cart {
+    lines {
+      id
+      quantity
+      attribute(key: "upsell") {
+        value
+      }
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          id
+        }
+      }
+    }
+  }
+}
