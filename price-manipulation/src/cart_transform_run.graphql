@@ -1,0 +1,16 @@
+query CartTransformRunInput {
+  cart {
+    lines {
+      id
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+        }
+      }
+      updatePrice: attribute(key: "Update price") {
+        value
+      }
+    }
+  }
+}

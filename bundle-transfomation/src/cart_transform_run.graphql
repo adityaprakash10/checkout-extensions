@@ -1,0 +1,23 @@
+query CartTransformRunInput {
+  cart {
+    lines {
+      id
+      quantity
+
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          id
+        }
+      }
+
+      bundleId: attribute(key: "_bundleId") {
+        value
+      }
+
+      freeGift: attribute(key: "_free_gift") {
+        value
+      }
+    }
+  }
+}
