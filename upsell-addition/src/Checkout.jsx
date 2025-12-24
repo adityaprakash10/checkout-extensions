@@ -136,13 +136,15 @@ function Extension() {
 
   return (
     <>
-      <s-stack>
-        <s-heading>
-          You might also like ({discountPercent}% OFF)
-        </s-heading>
+      <s-stack >
+      <s-stack paddingBlockEnd="small-300">
+  <s-heading>
+    You might also like ({discountPercent}% OFF)
+  </s-heading>
+</s-stack>
 
         {/* GUARANTEED ONE ROW */}
-        <s-grid gridTemplateColumns="repeat(3, 1fr)" gap="base">
+        <s-grid gridTemplateColumns="repeat(3, 1fr)" gap="small">
           {upsells.map((product) => {
             const image = product.images?.nodes?.[0];
 
@@ -150,21 +152,29 @@ function Extension() {
               <s-stack
                 key={product.id}
 
-                padding="base"
+                padding="none"
               >
                 {image && (
                   <s-image
                     src={image.url}
                     alt={product.title}
+                    inlineSize="112px"
+                    aspectRatio="1/1"
+                    borderRadius="base"
+                    border="base"
                   />
                 )}
 
-                <s-text>{product.title}</s-text>
+                <s-stack paddingBlockEnd="small-300" paddingBlockStart='small-300'>
+                  <s-text>{product.title}</s-text>
+                </s-stack>
+
 
                 <s-button
-                  variant="secondary"
+                  variant="auto"
                   command="--show"
                   commandFor="upsell-modal"
+                  inlineSize="fill"
                   onClick={() => {
                     setOpenProductId(product.id);
                     setSelectedColor(null);
@@ -172,10 +182,11 @@ function Extension() {
                     setSelectedVariantId(null);
                   }}
                 >
-                  Add
+                  <s-text color="base" type="small" tone="info">Add</s-text>
                 </s-button>
-
-              </s-stack>
+                
+                
+            </s-stack>
             );
           })}
         </s-grid>
@@ -220,14 +231,14 @@ function Extension() {
           return (
             <s-grid gridTemplateColumns="1fr 1.2fr" gap="large">
               <s-stack
-              
+
               >
                 {image && (
                   <s-image
                     src={image.url}
                     alt={product.title}
                     border="base"
-      borderRadius="large"
+                    borderRadius="large"
                   />
                 )}
               </s-stack>
@@ -251,7 +262,9 @@ function Extension() {
 
 
 
-                <s-text>Color: {selectedColor}</s-text>
+                <s-text>
+                  Color: <s-text color="subdued">{selectedColor}</s-text>
+                </s-text>
                 <s-stack direction="inline" gap="base" alignItems='start'>
                   {colors.map((color) => {
                     const colorImage = getVariantImageForColor(color);
@@ -299,16 +312,14 @@ function Extension() {
                   })}
                 </s-stack>
 
-                <s-text>Size : {selectedSize}</s-text>
+                <s-text>Size : <s-text color="subdued">{selectedSize}</s-text></s-text>
                 <s-stack direction="inline" gap="base">
                   {sizes.map((size) => (
-                    <s-button
+                    <s-clickable
                       key={size}
-                      variant={
-                        selectedSize === size
-                          ? 'primary'
-                          : 'secondary'
-                      }
+                      border="base"
+                      borderRadius="base"
+                      padding="small"
                       onClick={() => {
                         setSelectedSize(size);
                         if (selectedColor) {
@@ -319,21 +330,22 @@ function Extension() {
                         }
                       }}
                     >
-                      {size}
-                    </s-button>
+                      <s-text  color='subdued' type="small" tone="info">{size}</s-text>
+                    </s-clickable>
                   ))}
                 </s-stack>
 
-                <s-button
+                <s-clickable
                   slot="primary-action"
-                  variant="primary"
-                  disabled={!selectedVariantId}
-                  onClick={handleAddToCart}
-                  tone='neutral'
-                  inlineSize="fill"
+                  border="base"
+                  borderRadius="base"
+                  padding="small"
+                  onClick={selectedVariantId ? handleAddToCart : undefined}
                 >
-                  Select a size
-                </s-button>
+                  <s-stack direction="inline" alignItems="center" justifyContent="center">
+                    <s-text  color='subdued' type="small" tone="info">Select a size</s-text>
+                  </s-stack>
+                </s-clickable>
               </s-stack>
             </s-grid>
           );
